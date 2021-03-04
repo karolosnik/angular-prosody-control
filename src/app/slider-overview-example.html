@@ -1,0 +1,44 @@
+<mat-card class="result">
+	<mat-card-content>
+		<h2 class="example-h2">Prosody Control</h2>
+
+		<section class="example-section">
+			<mat-grid-list cols="5" rowHeight="100px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1">
+					control level
+				</mat-grid-tile>
+
+				<mat-grid-tile [colspan]="1" [rowspan]="1">
+					default
+				</mat-grid-tile>
+
+				<mat-grid-tile [colspan]="3" [rowspan]="1">
+					intensity
+				</mat-grid-tile>
+
+				<div *ngFor="let tile of tiles">
+					<mat-grid-tile [colspan]="1" [rowspan]="1">
+						{{tile.text}}
+					</mat-grid-tile>
+
+					<mat-grid-tile [colspan]="1" [rowspan]="1">
+						<mat-checkbox class="example-margin" [(indeterminate)]="indeterminate"
+							[labelPosition]="labelPosition" [(ngModel)]="tile.disabled">
+						</mat-checkbox>
+					</mat-grid-tile>
+
+					<mat-grid-tile [colspan]="3" [rowspan]="1">
+						<mat-slider min="-1" max="1" value="0" step="0.1" style="margin-left: 20px"
+							[disabled]="tile.disabled" (click)="tile.disabled= false">
+						</mat-slider>
+						{{tile.disabled}}
+					</mat-grid-tile>
+				</div>
+
+			</mat-grid-list>
+		</section>
+	</mat-card-content>
+</mat-card>
+<!-- Copyright 2020 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
