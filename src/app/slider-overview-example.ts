@@ -12,12 +12,18 @@ export class SliderOverviewExample {
   checked = false;
   indeterminate = false;
   labelPosition: "before" | "after" = "after";
+  loader: boolean = false;
 
   tiles: Tile[] = [
     { cols: 4, rows: 1, text: "energy  ", disabled: true },
     { cols: 4, rows: 1, text: "F0      ", disabled: true },
     { cols: 4, rows: 1, text: "duration", disabled: true }
   ];
+
+  synthesize() {
+    this.loader = true;
+    setTimeout(() => (this.loader = false), 3000);
+  }
 }
 
 export interface Tile {

@@ -39,6 +39,11 @@
 		</section>
 	</mat-card-content>
 </mat-card>
+
+<button mat-mini-fab (click)="synthesize()" color="primary" style="margin-top: 20px; margin-bottom: 20px" ><mat-icon>record_voice_over</mat-icon></button>
+
+<mat-spinner *ngIf="loader" style="margin-left: auto; margin-right:auto"></mat-spinner>
+
 <!-- Copyright 2020 Google LLC. All Rights Reserved.
     Use of this source code is governed by an MIT-style license that
     can be found in the LICENSE file at http://angular.io/license -->
