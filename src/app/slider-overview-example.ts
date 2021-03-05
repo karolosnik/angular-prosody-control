@@ -53,8 +53,11 @@ export class SliderOverviewExample {
     const energyVal= this.tiles[0].disabled ? "default" : this.tiles[0].value ;
     const f0Val= this.tiles[1].disabled ? "default" : this.tiles[1].value;
     const durationVal= this.tiles[2].disabled ? "default" : this.tiles[2].value;
+    var left= 'kalispera kai kali vradia'.slice(0,this.selectedText.position-1)
+    var center= 'kalispera kai kali vradia'.slice(this.selectedText.position-1,this.selectedText.position+this.selectedText.phrase.length-1)
+    var right= 'kalispera kai kali vradia'.slice(this.selectedText.position+this.selectedText.phrase.length-1)
     ELEMENT_DATA.push({
-        phrase: this.selectedText.phrase + ' ' + this.selectedText.position,
+        phrase: {'left':left, 'center':center, 'right':right},
         energy: energyVal,
         f0: f0Val,
         duration: durationVal,
@@ -125,7 +128,7 @@ export interface Tile {
 }
 
 export interface PeriodicElement {
-  phrase: string;
+  phrase: {'left':string, 'center':string, 'right':string};
   energy: number | string;
   f0: number | string;
   duration: number | string;
