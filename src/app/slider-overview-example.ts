@@ -25,7 +25,7 @@ export class SliderOverviewExample {
 
   onAllClicks(){
     if (document.getSelection()?.type == "None" || document.getSelection()?.type == "Caret"){ 
-      this.selectedText.phrase == "";
+      this.selectedText.phrase= "";
     }
   }
 
