@@ -48,9 +48,26 @@ export class SliderOverviewExample {
     }
   }
 
+  AsyncData() {
+    console.log('mpike')
+    const energyVal= this.tiles[0].disabled ? "default" : this.tiles[0].value ;
+    const f0Val= this.tiles[1].disabled ? "default" : this.tiles[1].value;
+    const durationVal= this.tiles[2].disabled ? "default" : this.tiles[2].value;
+    ELEMENT_DATA.push({
+        phrase: this.selectedText.phrase + ' ' + this.selectedText.position,
+        energy: energyVal,
+        f0: f0Val,
+        duration: durationVal,
+        wav: 'wav',
+    });
+
+    this.loader = false;
+  }
+
   synthesize() {
     this.loader = true;
-    setTimeout(() => (this.loader = false), 3000);
+    
+    setTimeout( this.AsyncData.bind(this), 3000);
   }
 
   //table
@@ -63,10 +80,11 @@ export class SliderOverviewExample {
   }
   displayedColumns: string[] = [
     "select",
-    "position",
-    "name",
-    "weight",
-    "symbol"
+    "phrase",
+    "energy",
+    "f0",
+    "duration",
+    "wav"
   ];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
