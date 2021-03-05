@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { ngAfterViewInit, Component, ViewChild } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
@@ -17,12 +17,36 @@ export class SliderOverviewExample {
   labelPosition: "before" | "after" = "after";
   loader: boolean = false;
   private sort: MatSort;
+  selectedText: SelectedText= {'phrase':'', 'position':-1}
+
+  ngAfterViewInit(){
+    document.addEventListener('click',this.onAllClicks.bind(this))
+  }
+
+  onAllClicks(){
+    if (document.getSelection()?.type == "None" || document.getSelection()?.type == "Caret"){ 
+      this.selectedText.phrase == "";
+    }
+  }
 
   tiles: Tile[] = [
     { cols: 4, rows: 1, text: "energy  ", disabled: true, value: 0 },
     { cols: 4, rows: 1, text: "F0      ", disabled: true, value: 0 },
     { cols: 4, rows: 1, text: "duration", disabled: true, value: 0 }
   ];
+
+  trackHighlightedText(){
+    let anchorOffset= document.getSelection()?.anchorOffset || null;
+    let focusOffset= document.getSelection()?.focusOffset || null;
+    let phrase= document.getSelection()?.toString() || "";
+    
+    let position= -1
+    if (anchorOffset && focusOffset){
+      this.selectedText.position= Math.min(anchorOffset,focusOffset);
+      this.selectedText.phrase= phrase;
+      console.log(this.selectedText)
+    }
+  }
 
   synthesize() {
     this.loader = true;
@@ -72,18 +96,7 @@ export class SliderOverviewExample {
   }
 }
 
-let ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: "Hydrogen", weight: 1.0079, symbol: "H" },
-  { position: 2, name: "Helium", weight: 4.0026, symbol: "He" },
-  { position: 3, name: "Lithium", weight: 6.941, symbol: "Li" },
-  { position: 4, name: "Beryllium", weight: 9.0122, symbol: "Be" },
-  { position: 5, name: "Boron", weight: 10.811, symbol: "B" },
-  { position: 6, name: "Carbon", weight: 12.0107, symbol: "C" },
-  { position: 7, name: "Nitrogen", weight: 14.0067, symbol: "N" },
-  { position: 8, name: "Oxygen", weight: 15.9994, symbol: "O" },
-  { position: 9, name: "Fluorine", weight: 18.9984, symbol: "F" },
-  { position: 10, name: "Neon", weight: 20.1797, symbol: "Ne" }
-];
+let ELEMENT_DATA: PeriodicElement[] = [];
 
 export interface Tile {
   cols: number;
@@ -94,12 +107,17 @@ export interface Tile {
 }
 
 export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  phrase: string;
+  energy: number | string;
+  f0: number | string;
+  duration: number | string;
+  wav: string;
 }
 
+export interface SelectedText {
+  phrase: string;
+  position: number;
+}
 /**  Copyright 2020 Google LLC. All Rights Reserved.
     Use of this source code is governed by an MIT-style license that
     can be found in the LICENSE file at http://angular.io/license */
