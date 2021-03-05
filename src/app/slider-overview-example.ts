@@ -18,9 +18,9 @@ export class SliderOverviewExample implements AfterViewInit {
   loader: boolean = false;
 
   tiles: Tile[] = [
-    { cols: 4, rows: 1, text: "energy  ", disabled: true },
-    { cols: 4, rows: 1, text: "F0      ", disabled: true },
-    { cols: 4, rows: 1, text: "duration", disabled: true }
+    { cols: 4, rows: 1, text: "energy  ", disabled: true, value: 0 },
+    { cols: 4, rows: 1, text: "F0      ", disabled: true, value: 0 },
+    { cols: 4, rows: 1, text: "duration", disabled: true, value: 0 }
   ];
 
   synthesize() {
@@ -87,6 +87,7 @@ export interface Tile {
   rows: number;
   text: string;
   disabled: boolean;
+  value: number;
 }
 
 export interface PeriodicElement {
