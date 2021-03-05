@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
@@ -11,11 +11,12 @@ import { MatSort } from "@angular/material/sort";
   templateUrl: "slider-overview-example.html",
   styleUrls: ["slider-overview-example.css"]
 })
-export class SliderOverviewExample implements AfterViewInit {
+export class SliderOverviewExample {
   checked = false;
   indeterminate = false;
   labelPosition: "before" | "after" = "after";
   loader: boolean = false;
+  private sort: MatSort;
 
   tiles: Tile[] = [
     { cols: 4, rows: 1, text: "energy  ", disabled: true, value: 0 },
@@ -29,9 +30,11 @@ export class SliderOverviewExample implements AfterViewInit {
   }
 
   //table
-  @ViewChild(MatSort) sort: MatSort;
-
-  ngAfterViewInit() {
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
+  setDataSourceAttributes() {
     this.dataSource.sort = this.sort;
   }
   displayedColumns: string[] = [
