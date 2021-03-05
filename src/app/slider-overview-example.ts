@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
 import { MatTableDataSource } from "@angular/material/table";
+import { MatSort } from "@angular/material/sort";
 
 /**
  * @title Basic slider
@@ -10,7 +11,7 @@ import { MatTableDataSource } from "@angular/material/table";
   templateUrl: "slider-overview-example.html",
   styleUrls: ["slider-overview-example.css"]
 })
-export class SliderOverviewExample {
+export class SliderOverviewExample implements AfterViewInit {
   checked = false;
   indeterminate = false;
   labelPosition: "before" | "after" = "after";
@@ -28,6 +29,11 @@ export class SliderOverviewExample {
   }
 
   //table
+  @ViewChild(MatSort) sort: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
   displayedColumns: string[] = [
     "select",
     "position",
