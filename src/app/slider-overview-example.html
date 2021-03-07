@@ -46,11 +46,14 @@
   </mat-card-content>
 </mat-card>
 
-<h3 id="sentence" (mouseup)="trackHighlightedText()">
+<h3 id="sentence-original" [style.display]="!showInstr ? 'block' : 'none'" (mouseup)="trackHighlightedText()">
+  Kalispera kai kali vradia
+</h3>
+<h3 id="sentence-show-instructions" [style.display]="showInstr ? 'block' : 'none'" (mouseup)="trackHighlightedText()">
   Kalispera kai kali vradia
 </h3>
 
-<button mat-mini-fab [disabled]="selectedText.phrase.length == 0" (click)="synthesize()" color="primary" style="margin-top: 20px; margin-bottom: 20px" ><mat-icon>record_voice_over</mat-icon></button>
+<button mat-mini-fab id="get-wav-button" [disabled]="selectedText.phrase.length == 0" (click)="synthesize()" color="primary" style="margin-top: 20px; margin-bottom: 20px" ><mat-icon>record_voice_over</mat-icon></button>
 
 <mat-spinner *ngIf="loader" style="margin-left: auto; margin-right:auto"></mat-spinner>
 

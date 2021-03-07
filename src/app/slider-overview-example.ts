@@ -25,10 +25,15 @@ export class SliderOverviewExample {
   }
 
   onAllClicks(event){
-    debugger
-    console.log(event.target.id,event.target.parentElement.id,event.target.parentElement.parentElement.id)
+    if (this.showInstr == true || event.target.id.includes('show-instructions') || event.target.parentElement?.id.includes('show-instructions') || event.target.parentElement?.parentElement?.id.includes('show-instructions') ){
+      return
+    }
     if (document.getSelection()?.type == "None" || document.getSelection()?.type == "Caret"){ 
       this.selectedText.phrase= "";
+      let h1ElemOriginal= <HTMLElement>document.querySelector('#sentence-original')
+      let h1ElemShowIntr= <HTMLElement>document.querySelector('#sentence-show-instructions')
+      h1ElemShowIntr.innerHTML= h1ElemOriginal.innerHTML;
+      this.showInstr= false;
     }
   }
 
@@ -39,12 +44,14 @@ export class SliderOverviewExample {
   ];
   
   giveInstuctions(){
-    let h1Elem= <HTMLElement>document.querySelector('#sentence')
-    let sentence= h1Elem.innerText;
+    this.showInstr= true;
+    let h1ElemOriginal= <HTMLElement>document.querySelector('#sentence-original')
+    let sentence= h1ElemOriginal.innerText;
+    let h1Elem= <HTMLElement>document.querySelector('#sentence-show-instructions')
     let words= sentence.split(' ');
     let left_i= sentence.indexOf(words[1])
     let right_i= left_i + words[1].length
-    
+    let wavButton= <HTMLElement>document.querySelector('#get-wav-button')
 
     var i = left_i;
 
@@ -59,16 +66,16 @@ export class SliderOverviewExample {
             myLoop(); 
         }
         else{
-          
+          wavButton.click();
         }
       }, 500)
     }
 
     myLoop();
-    this.showInstr= true;
+
     this.selectedText.phrase= words[1];
     this.selectedText.position= left_i;
-
+    //this.showInstr= false;
   }
 
   trackHighlightedText(){
@@ -85,7 +92,6 @@ export class SliderOverviewExample {
   }
 
   AsyncData() {
-    console.log('mpike')
     const energyVal= this.tiles[0].disabled ? "default" : this.tiles[0].value ;
     const f0Val= this.tiles[1].disabled ? "default" : this.tiles[1].value;
     const durationVal= this.tiles[2].disabled ? "default" : this.tiles[2].value;
