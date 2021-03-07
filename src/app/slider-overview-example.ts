@@ -16,6 +16,7 @@ export class SliderOverviewExample {
   indeterminate = false;
   labelPosition: "before" | "after" = "after";
   loader: boolean = false;
+  showInstr: boolean= false;
   private sort: MatSort;
   selectedText: SelectedText= {'phrase':'', 'position':-1}
 
@@ -23,7 +24,9 @@ export class SliderOverviewExample {
     document.addEventListener('click',this.onAllClicks.bind(this))
   }
 
-  onAllClicks(){
+  onAllClicks(event){
+    debugger
+    console.log(event.target.id,event.target.parentElement.id,event.target.parentElement.parentElement.id)
     if (document.getSelection()?.type == "None" || document.getSelection()?.type == "Caret"){ 
       this.selectedText.phrase= "";
     }
@@ -34,6 +37,39 @@ export class SliderOverviewExample {
     { cols: 4, rows: 1, text: "F0      ", disabled: true, value: 0 },
     { cols: 4, rows: 1, text: "duration", disabled: true, value: 0 }
   ];
+  
+  giveInstuctions(){
+    let h1Elem= <HTMLElement>document.querySelector('#sentence')
+    let sentence= h1Elem.innerText;
+    let words= sentence.split(' ');
+    let left_i= sentence.indexOf(words[1])
+    let right_i= left_i + words[1].length
+    
+
+    var i = left_i;
+
+    function myLoop() {
+      setTimeout(function() {
+          if (i <= right_i) {
+            let leftPart= sentence.slice(0,left_i)
+            let centerPart= sentence.slice(left_i,i)
+            let rightPart= sentence.slice(i)
+            h1Elem.innerHTML= "<span>"+leftPart+"</span><span style='background-color: blue; color: white;'>"+centerPart+"</span>"+rightPart+"<span>"
+            i++;
+            myLoop(); 
+        }
+        else{
+          
+        }
+      }, 500)
+    }
+
+    myLoop();
+    this.showInstr= true;
+    this.selectedText.phrase= words[1];
+    this.selectedText.position= left_i;
+
+  }
 
   trackHighlightedText(){
     let anchorOffset= document.getSelection()?.anchorOffset || null;
