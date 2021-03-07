@@ -46,7 +46,7 @@ export class SliderOverviewExample {
   giveInstuctions(){
     this.showInstr= true;
     let h1ElemOriginal= <HTMLElement>document.querySelector('#sentence-original')
-    let sentence= h1ElemOriginal.innerText;
+    let sentence= h1ElemOriginal.innerText.trim();
     let h1Elem= <HTMLElement>document.querySelector('#sentence-show-instructions')
     let words= sentence.split(' ');
     let left_i= sentence.indexOf(words[1])
@@ -72,7 +72,10 @@ export class SliderOverviewExample {
     }
 
     myLoop();
-
+    this.tiles[0].disabled= false;
+    this.tiles[0].value= 0.7;
+    this.tiles[1].disabled= false;
+    this.tiles[1].value= -0.3;
     this.selectedText.phrase= words[1];
     this.selectedText.position= left_i;
     //this.showInstr= false;
@@ -96,8 +99,8 @@ export class SliderOverviewExample {
     const f0Val= this.tiles[1].disabled ? "default" : this.tiles[1].value;
     const durationVal= this.tiles[2].disabled ? "default" : this.tiles[2].value;
     var left= 'kalispera kai kali vradia'.slice(0,this.selectedText.position-1)
-    var center= 'kalispera kai kali vradia'.slice(this.selectedText.position-1,this.selectedText.position+this.selectedText.phrase.length-1)
-    var right= 'kalispera kai kali vradia'.slice(this.selectedText.position+this.selectedText.phrase.length-1)
+    var center= 'kalispera kai kali vradia'.slice(this.selectedText.position-1,this.selectedText.position+this.selectedText.phrase.length)
+    var right= 'kalispera kai kali vradia'.slice(this.selectedText.position+this.selectedText.phrase.length)
     ELEMENT_DATA.push({
         phrase: {'left':left, 'center':center, 'right':right},
         energy: energyVal,
