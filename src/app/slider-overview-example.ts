@@ -28,12 +28,14 @@ export class SliderOverviewExample {
     if (this.showInstr == true || event.target.id.includes('show-instructions') || event.target.parentElement?.id.includes('show-instructions') || event.target.parentElement?.parentElement?.id.includes('show-instructions') ){
       return
     }
-    if (document.getSelection()?.type == "None" || document.getSelection()?.type == "Caret"){ 
-      this.selectedText.phrase= "";
-      let h1ElemOriginal= <HTMLElement>document.querySelector('#sentence-original')
-      let h1ElemShowIntr= <HTMLElement>document.querySelector('#sentence-show-instructions')
-      h1ElemShowIntr.innerHTML= h1ElemOriginal.innerHTML;
-      this.showInstr= false;
+    if (document.getSelection()?.type == "None" || document.getSelection()?.type == "Caret"){
+      if (!this.showInstr){
+        this.selectedText.phrase= "";
+        let h1ElemOriginal= <HTMLElement>document.querySelector('#sentence-original')
+        let h1ElemShowIntr= <HTMLElement>document.querySelector('#sentence-show-instructions')
+        h1ElemShowIntr.innerHTML= h1ElemOriginal.innerHTML;
+        this.showInstr= false;
+      }
     }
   }
 
@@ -78,7 +80,6 @@ export class SliderOverviewExample {
     this.tiles[1].value= -0.3;
     this.selectedText.phrase= words[1];
     this.selectedText.position= left_i;
-    //this.showInstr= false;
   }
 
   trackHighlightedText(){
@@ -110,6 +111,14 @@ export class SliderOverviewExample {
     });
 
     this.loader = false;
+    this.tiles[0].disabled= false;
+    this.tiles[0].value= 0;
+    this.tiles[1].disabled= false;
+    this.tiles[1].value= 0;
+    this.tiles[2].disabled= false;
+    this.tiles[2].value= 0;
+    this.showInstr= false;
+    this.selectedText.phrase= "";
   }
 
   synthesize() {
